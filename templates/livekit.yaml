@@ -18,14 +18,16 @@ rtc:
   tcp_port: 7881
 
 # TURN server configuration (for clients behind strict NAT)
+# Disabled by default - requires TLS certificates
+# Enable if you have clients behind strict corporate firewalls
 turn:
-  enabled: true
+  enabled: false
   # Domain for TURN server
-  domain: {{LIVEKIT_DOMAIN}}
+  # domain: {{LIVEKIT_DOMAIN}}
   # TLS port for TURN
-  tls_port: 5349
+  # tls_port: 5349
   # UDP port for TURN
-  udp_port: 3478
+  # udp_port: 3478
 
 # API keys for authentication
 # IMPORTANT: Generate secure keys using: openssl rand -hex 32
