@@ -25,7 +25,7 @@
 }
 
 # =============================================================================
-# Matrix Homeserver (Tuwunel/Conduwuit)
+# Matrix Homeserver (Conduit)
 # =============================================================================
 
 matrix.example.com {
@@ -51,8 +51,8 @@ matrix.example.com {
 	@options method OPTIONS
 	respond @options 204
 	
-	# Reverse proxy to Tuwunel
-	reverse_proxy tuwunel:6167 {
+	# Reverse proxy to Conduit
+	reverse_proxy conduit:6167 {
 		# Health checks
 		health_uri /_matrix/client/versions
 		health_interval 30s
@@ -84,7 +84,7 @@ matrix.example.com:8448 {
 	
 	encode gzip zstd
 	
-	reverse_proxy tuwunel:6167 {
+	reverse_proxy conduit:6167 {
 		header_up Host {host}
 		header_up X-Real-IP {remote_host}
 		header_up X-Forwarded-For {remote_host}

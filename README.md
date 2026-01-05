@@ -2,13 +2,13 @@
 
 A high-performance, production-ready Matrix homeserver stack featuring:
 
-- **[Tuwunel (Conduwuit)](https://github.com/girlbossceo/conduwuit)** - Lightning-fast Matrix homeserver written in Rust
+- **[Conduit](https://conduit.rs/)** - Lightning-fast Matrix homeserver written in Rust
 - **[LiveKit](https://livekit.io/)** - Real-time audio/video communication for Matrix calls
 - **[Caddy](https://caddyserver.com/)** - Automatic HTTPS reverse proxy
 
 ## Features
 
-- 🚀 **High Performance**: Tuwunel is one of the fastest Matrix homeservers available
+- 🚀 **High Performance**: Conduit is one of the fastest Matrix homeservers available
 - 🔒 **Automatic HTTPS**: Caddy handles Let's Encrypt certificates automatically
 - 📞 **Voice/Video Calls**: Native Matrix RTC support via LiveKit
 - 🐳 **Docker-based**: Easy deployment and updates
@@ -37,7 +37,7 @@ cp .env.example .env
 
 Edit the following files and replace `example.com` with your domain:
 
-#### `tuwunel.toml`
+#### `conduit.toml`
 ```toml
 server_name = "matrix.yourdomain.com"
 ```
@@ -93,8 +93,8 @@ docker compose up -d
 ### 6. Create Admin User
 
 ```bash
-# Access the Tuwunel container
-docker compose exec tuwunel /bin/sh
+# Access the Conduit container
+docker compose exec conduit /bin/sh
 
 # Create an admin user (inside the container)
 # The server will guide you through user creation via the admin API
@@ -109,9 +109,9 @@ curl -X POST "https://matrix.yourdomain.com/_matrix/client/v3/register" \
 
 ## Configuration
 
-### Tuwunel (Matrix Homeserver)
+### Conduit (Matrix Homeserver)
 
-Main configuration file: `tuwunel.toml`
+Main configuration file: `conduit.toml`
 
 Key settings:
 - `server_name`: Your Matrix domain (cannot be changed after setup!)
@@ -156,7 +156,7 @@ Features:
 docker compose logs -f
 
 # Specific service
-docker compose logs -f tuwunel
+docker compose logs -f conduit
 docker compose logs -f livekit
 docker compose logs -f caddy
 ```
@@ -175,7 +175,7 @@ docker compose up -d
 docker compose down
 
 # Backup data volumes
-docker run --rm -v matrix-server-docker-compose_tuwunel_data:/data -v $(pwd):/backup alpine tar czf /backup/tuwunel-backup.tar.gz /data
+docker run --rm -v matrix-server-docker-compose_conduit_data:/data -v $(pwd):/backup alpine tar czf /backup/conduit-backup.tar.gz /data
 
 # Restart services
 docker compose up -d
