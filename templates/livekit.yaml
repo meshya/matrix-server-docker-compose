@@ -6,10 +6,10 @@
 # Server port configuration
 port: 7880
 rtc:
-  # UDP port range for WebRTC media
+  # UDP port range for WebRTC media (must be a range, not single port)
   port_range_start: 7882
-  port_range_end: 7882
-  # Use a single port for all UDP traffic (better for Docker)
+  port_range_end: 7892
+  # Use external IP for NAT traversal
   use_external_ip: true
   # Enable ICE lite for simpler NAT traversal
   enable_loopback_candidate: false

@@ -31,8 +31,8 @@ services:
     networks:
       - matrix
     ports:
-      # WebRTC UDP ports for media
-      - "7882:7882/udp"
+      # WebRTC UDP ports for media (range 7882-7892)
+      - "7882-7892:7882-7892/udp"
       # TURN/TLS port
       - "5349:5349/tcp"
     healthcheck:
