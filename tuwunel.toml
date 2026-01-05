@@ -1,0 +1,112 @@
+# =============================================================================
+# Tuwunel (Conduwuit) Configuration
+# High-performance Matrix homeserver written in Rust
+# =============================================================================
+
+[global]
+
+# The server name (your Matrix domain, e.g., matrix.example.com)
+# This MUST match your domain and cannot be changed after setup
+server_name = "matrix.example.com"
+
+# Database configuration
+database_path = "/var/lib/conduwuit/conduwuit.db"
+database_backend = "rocksdb"
+
+# Network configuration
+address = "0.0.0.0"
+port = 6167
+
+# Maximum request size (in bytes) - 100MB for media uploads
+max_request_size = 104857600
+
+# Allow registration (set to false for invite-only servers)
+allow_registration = false
+
+# Registration token for controlled registration (optional)
+# registration_token = "your-secret-registration-token"
+
+# Allow federation with other Matrix servers
+allow_federation = true
+
+# Trusted servers for key verification
+trusted_servers = ["matrix.org"]
+
+# =============================================================================
+# Performance Optimizations
+# =============================================================================
+
+# RocksDB optimizations
+rocksdb_max_open_files = 512
+rocksdb_cache_capacity_mb = 256
+rocksdb_write_buffer_size = 134217728  # 128MB
+rocksdb_max_write_buffer_number = 4
+
+# Request handling
+max_concurrent_requests = 500
+
+# Media configuration
+max_fetch_prev_events = 100
+
+# =============================================================================
+# Logging
+# =============================================================================
+
+log = "warn,conduwuit=info"
+
+# =============================================================================
+# Matrix Features
+# =============================================================================
+
+# Enable URL previews
+url_preview_enabled = true
+
+# Allow presence (online/offline status)
+allow_presence = true
+
+# Allow incoming typing indicators
+allow_incoming_typing = true
+
+# Allow outgoing typing indicators  
+allow_outgoing_typing = true
+
+# Allow incoming read receipts
+allow_incoming_read_receipts = true
+
+# Allow outgoing read receipts
+allow_outgoing_read_receipts = true
+
+# =============================================================================
+# LiveKit Integration (Matrix RTC)
+# =============================================================================
+
+# Enable LiveKit integration for Matrix calls
+# [global.well_known]
+# The client well-known will be served automatically
+
+# =============================================================================
+# Security
+# =============================================================================
+
+# IP range denylist for federation (prevent SSRF)
+ip_range_denylist = [
+    "127.0.0.0/8",
+    "10.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16",
+    "100.64.0.0/10",
+    "192.0.0.0/24",
+    "169.254.0.0/16",
+    "192.88.99.0/24",
+    "198.18.0.0/15",
+    "192.0.2.0/24",
+    "198.51.100.0/24",
+    "203.0.113.0/24",
+    "224.0.0.0/4",
+    "::1/128",
+    "fe80::/10",
+    "fc00::/7",
+    "2001:db8::/32",
+    "ff00::/8",
+    "fec0::/10"
+]

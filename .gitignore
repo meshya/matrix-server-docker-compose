@@ -1,0 +1,30 @@
+# Docker
+.env
+
+# Data volumes (if mounted locally)
+data/
+
+# Backups
+*.tar.gz
+*.tar
+*.zip
+backups/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
