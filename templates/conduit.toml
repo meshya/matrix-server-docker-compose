@@ -7,7 +7,7 @@
 
 # The server name (your Matrix domain, e.g., matrix.example.com)
 # This MUST match your domain and cannot be changed after setup
-server_name = "matrix.example.com"
+server_name = "{{MATRIX_DOMAIN}}"
 
 # Database configuration
 database_path = "/var/lib/matrix-conduit"
@@ -21,13 +21,13 @@ port = 6167
 max_request_size = 104857600
 
 # Allow registration (set to false for invite-only servers)
-allow_registration = false
+allow_registration = {{ALLOW_REGISTRATION}}
 
 # Registration token for controlled registration (optional)
 # registration_token = "your-secret-registration-token"
 
 # Allow federation with other Matrix servers
-allow_federation = true
+allow_federation = {{ALLOW_FEDERATION}}
 
 # Trusted servers for key verification
 trusted_servers = ["matrix.org"]
@@ -38,7 +38,7 @@ trusted_servers = ["matrix.org"]
 
 # RocksDB optimizations
 rocksdb_max_open_files = 512
-rocksdb_cache_capacity_mb = 256
+rocksdb_cache_capacity_mb = {{ROCKSDB_CACHE_MB}}
 rocksdb_write_buffer_size = 134217728  # 128MB
 rocksdb_max_write_buffer_number = 4
 

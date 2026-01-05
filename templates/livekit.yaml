@@ -21,7 +21,7 @@ rtc:
 turn:
   enabled: true
   # Domain for TURN server
-  domain: livekit.example.com
+  domain: {{LIVEKIT_DOMAIN}}
   # TLS port for TURN
   tls_port: 5349
   # UDP port for TURN
@@ -31,7 +31,7 @@ turn:
 # IMPORTANT: Generate secure keys using: openssl rand -hex 32
 keys:
   # API Key : API Secret (replace with your own!)
-  APIKeyFromEnv: SecretFromEnv
+  {{LIVEKIT_API_KEY}}: {{LIVEKIT_API_SECRET}}
 
 # Logging configuration
 logging:
