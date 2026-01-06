@@ -52,22 +52,24 @@ services:
     ports:
       # WebRTC UDP ports for media (range 7882-7892)
       - "7882-7892:7882-7892/udp"
+      # WebRTC TCP fallback
+      - "7881:7881/tcp"
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7880/"]
       interval: 30s
       timeout: 10s
       retries: 3
 
-  # LiveKit JWT Service - Generates tokens for Matrix clients
+  # LiveKit JWT Service - Generates tokens for Matrix clients (Element Call)
   livekit-jwt:
-    image: twinenetwork/livekit-jwt:latest
+    image: ghcr.io/element-hq/lk-jwt-service:latest
     container_name: livekit-jwt
     restart: unless-stopped
     environment:
+      - LK_JWT_PORT=8080
       - LIVEKIT_URL=wss://{{LIVEKIT_DOMAIN}}
       - LIVEKIT_KEY={{LIVEKIT_API_KEY}}
       - LIVEKIT_SECRET={{LIVEKIT_API_SECRET}}
-      - LIVEKIT_INSECURE_SKIP_VERIFY_TLS=false
     networks:
       - matrix
     depends_on:

@@ -47,7 +47,8 @@
 	# Well-known endpoints
 	handle /.well-known/matrix/client {
 		header Content-Type application/json
-		respond `{"m.homeserver":{"base_url":"https://{{MATRIX_DOMAIN}}"}}`
+		header Access-Control-Allow-Origin *
+		respond `{"m.homeserver":{"base_url":"https://{{MATRIX_DOMAIN}}"},"org.matrix.msc3575.proxy":{"url":"https://{{MATRIX_DOMAIN}}"},"org.matrix.msc4143.rtc_foci":[{"type":"livekit","livekit_service_url":"https://{{MATRIX_DOMAIN}}/_livekit"}]}`
 	}
 
 	handle /.well-known/matrix/server {
@@ -108,6 +109,18 @@
 		level INFO
 	}
 	
+	# CORS headers for WebRTC clients
+	header {
+		Access-Control-Allow-Origin *
+		Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+		Access-Control-Allow-Headers "*"
+		Access-Control-Max-Age 3600
+	}
+	
+	# Handle OPTIONS preflight
+	@options method OPTIONS
+	respond @options 204
+	
 	# LiveKit API and WebSocket
 	reverse_proxy livekit:7880 {
 		header_up Host {host}
@@ -115,7 +128,7 @@
 		header_up X-Forwarded-For {remote_host}
 		header_up X-Forwarded-Proto {scheme}
 		
-		# WebSocket support
+		# WebSocket support - no timeout for long-lived connections
 		transport http {
 			read_timeout 0
 			write_timeout 0

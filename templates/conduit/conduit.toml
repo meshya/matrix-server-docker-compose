@@ -77,12 +77,22 @@ allow_incoming_read_receipts = true
 allow_outgoing_read_receipts = true
 
 # =============================================================================
-# LiveKit Integration (Matrix RTC)
+# TURN/STUN Configuration for WebRTC
 # =============================================================================
 
-# Enable LiveKit integration for Matrix calls
-# [global.well_known]
-# The client well-known will be served automatically
+# STUN/TURN servers for NAT traversal during voice/video calls
+# Using public STUN servers (free, for NAT traversal only)
+turn_uris = [
+    "stun:stun.l.google.com:19302",
+    "stun:stun1.l.google.com:19302",
+    "stun:stun.cloudflare.com:3478"
+]
+
+# TURN secret (leave empty if not using authenticated TURN)
+# turn_secret = ""
+
+# TURN TTL in seconds
+turn_ttl = 86400
 
 # =============================================================================
 # Security
