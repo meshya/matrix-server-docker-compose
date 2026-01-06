@@ -108,3 +108,11 @@ rc_login:
   failed_attempts:
     per_second: 0.17
     burst_count: 3
+
+# =============================================================================
+# Element Call / LiveKit Integration
+# =============================================================================
+
+# Enable experimental features for group calls
+experimental_features:
+  msc3401_enabled: true  # Native group VoIP signalling

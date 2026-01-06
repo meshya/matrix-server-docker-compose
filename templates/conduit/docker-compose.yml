@@ -39,6 +39,26 @@ services:
       timeout: 10s
       retries: 3
 
+  # LiveKit JWT Service - Generates tokens for Matrix clients
+  livekit-jwt:
+    image: twinenetwork/livekit-jwt:latest
+    container_name: livekit-jwt
+    restart: unless-stopped
+    environment:
+      - LIVEKIT_URL=wss://{{LIVEKIT_DOMAIN}}
+      - LIVEKIT_KEY={{LIVEKIT_API_KEY}}
+      - LIVEKIT_SECRET={{LIVEKIT_API_SECRET}}
+      - LIVEKIT_INSECURE_SKIP_VERIFY_TLS=false
+    networks:
+      - matrix
+    depends_on:
+      - livekit
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   # Caddy - Reverse proxy with automatic HTTPS
   caddy:
     image: caddy:2-alpine
@@ -48,7 +68,7 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"  # HTTP/3
-      - "8443:8443"    # LiveKit secure WebSocket
+      - "8448:8448"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
@@ -58,6 +78,7 @@ services:
     depends_on:
       - conduit
       - livekit
+      - livekit-jwt
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/health"]
       interval: 30s

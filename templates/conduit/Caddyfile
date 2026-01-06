@@ -55,6 +55,12 @@
 		respond `{"m.server":"{{MATRIX_DOMAIN}}:443"}`
 	}
 
+	# LiveKit JWT Service for Element Call
+	handle /_livekit/* {
+		uri strip_prefix /_livekit
+		reverse_proxy livekit-jwt:8080
+	}
+
 	# Reverse proxy to Conduit
 	reverse_proxy conduit:6167 {
 		header_up Host {host}
