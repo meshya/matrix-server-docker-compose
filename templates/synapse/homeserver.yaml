@@ -116,3 +116,26 @@ rc_login:
 # Enable experimental features for group calls
 experimental_features:
   msc3401_enabled: true  # Native group VoIP signalling
+
+# =============================================================================
+# TURN Server Configuration (for NAT traversal in calls)
+# =============================================================================
+
+# Using public STUN servers and optional TURN
+turn_uris:
+  - "stun:stun.l.google.com:19302"
+  - "stun:stun1.l.google.com:19302"
+  - "stun:stun.cloudflare.com:3478"
+
+# TURN shared secret (leave empty if not using authenticated TURN)
+# turn_shared_secret: "{{TURN_SECRET}}"
+
+# TURN username and password (alternative to shared secret)
+# turn_username: "your-turn-username"
+# turn_password: "your-turn-password"
+
+# How long credentials are valid for (in milliseconds)
+turn_user_lifetime: 86400000
+
+# Whether to allow guests to use TURN
+turn_allow_guests: false
