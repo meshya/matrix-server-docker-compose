@@ -80,21 +80,21 @@ prompt_yesno() {
 
 # Function to prompt for homeserver choice
 prompt_homeserver() {
-    echo -e "${CYAN}Choose your Matrix homeserver:${NC}"
-    echo ""
-    echo "  1) Conduit  - Lightweight, fast, written in Rust"
-    echo "                Best for: Small deployments, low resources"
-    echo ""
-    echo "  2) Synapse  - Reference implementation, feature-complete"
-    echo "                Best for: Full compatibility, larger deployments"
-    echo ""
+    echo -e "${CYAN}Choose your Matrix homeserver:${NC}" >&2
+    echo "" >&2
+    echo "  1) Conduit  - Lightweight, fast, written in Rust" >&2
+    echo "                Best for: Small deployments, low resources" >&2
+    echo "" >&2
+    echo "  2) Synapse  - Reference implementation, feature-complete" >&2
+    echo "                Best for: Full compatibility, larger deployments" >&2
+    echo "" >&2
     
     local choice=""
     while [[ ! "$choice" =~ ^[12]$ ]]; do
         read -p "Enter choice (1 or 2) [1]: " choice
         choice="${choice:-1}"
         if [[ ! "$choice" =~ ^[12]$ ]]; then
-            echo -e "${RED}Please enter 1 or 2${NC}"
+            echo -e "${RED}Please enter 1 or 2${NC}" >&2
         fi
     done
     
