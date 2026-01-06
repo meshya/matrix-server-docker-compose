@@ -7,8 +7,11 @@ services:
     volumes:
       - synapse_data:/data
       - ./homeserver.yaml:/data/homeserver.yaml:ro
+      - ./log.config:/data/log.config:ro
     environment:
       SYNAPSE_CONFIG_PATH: /data/homeserver.yaml
+      UID: 1000
+      GID: 1000
     networks:
       - matrix
     depends_on:

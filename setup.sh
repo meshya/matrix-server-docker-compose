@@ -192,7 +192,7 @@ else
     process_template "$HOMESERVER_TEMPLATE_DIR/homeserver.yaml" "$DEPLOY_DIR/homeserver.yaml"
     
     echo "  - log.config"
-    cp "$HOMESERVER_TEMPLATE_DIR/log.config" "$DEPLOY_DIR/${MATRIX_DOMAIN}.log.config"
+    cp "$HOMESERVER_TEMPLATE_DIR/log.config" "$DEPLOY_DIR/log.config"
 fi
 
 echo "  - livekit.yaml"
@@ -256,7 +256,7 @@ if [[ "$HOMESERVER" == "conduit" ]]; then
     echo "  - conduit.toml"
 else
     echo "  - homeserver.yaml"
-    echo "  - ${MATRIX_DOMAIN}.log.config"
+    echo "  - log.config"
 fi
 echo "  - livekit.yaml"
 echo "  - Caddyfile"

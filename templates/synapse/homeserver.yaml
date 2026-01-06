@@ -23,7 +23,7 @@ database:
     database: /data/homeserver.db
 
 # Logging
-log_config: "/data/{{MATRIX_DOMAIN}}.log.config"
+log_config: "/data/log.config"
 
 # Media storage
 media_store_path: /data/media_store
