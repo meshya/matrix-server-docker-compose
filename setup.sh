@@ -182,7 +182,7 @@ mkdir -p "$DEPLOY_DIR"
 echo -e "${BLUE}Processing templates...${NC}"
 
 echo "  - docker-compose.yml"
-cp "$HOMESERVER_TEMPLATE_DIR/docker-compose.yml" "$DEPLOY_DIR/docker-compose.yml"
+process_template "$HOMESERVER_TEMPLATE_DIR/docker-compose.yml" "$DEPLOY_DIR/docker-compose.yml"
 
 if [[ "$HOMESERVER" == "conduit" ]]; then
     echo "  - conduit.toml"

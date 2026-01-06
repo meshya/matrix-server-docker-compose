@@ -68,7 +68,7 @@ trusted_key_servers:
 suppress_key_server_warning: true
 
 # Signing key (will be auto-generated on first run)
-signing_key_path: "/data/{{MATRIX_DOMAIN}}.signing.key"
+signing_key_path: "/data/signing.key"
 
 # Report anonymous statistics
 report_stats: false

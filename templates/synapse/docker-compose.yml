@@ -10,8 +10,8 @@ services:
       - ./log.config:/data/log.config:ro
     environment:
       SYNAPSE_CONFIG_PATH: /data/homeserver.yaml
-      UID: 1000
-      GID: 1000
+      SYNAPSE_SERVER_NAME: "{{MATRIX_DOMAIN}}"
+      SYNAPSE_REPORT_STATS: "no"
     networks:
       - matrix
     depends_on:
@@ -21,7 +21,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 60s
 
   # LiveKit - Real-time audio/video communication
   livekit:
