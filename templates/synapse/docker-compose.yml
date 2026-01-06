@@ -1,0 +1,77 @@
+services:
+  # Synapse - Reference Matrix homeserver implementation
+  synapse:
+    image: matrixdotorg/synapse:latest
+    container_name: synapse
+    restart: unless-stopped
+    volumes:
+      - synapse_data:/data
+      - ./homeserver.yaml:/data/homeserver.yaml:ro
+    environment:
+      SYNAPSE_CONFIG_PATH: /data/homeserver.yaml
+    networks:
+      - matrix
+    depends_on:
+      - livekit
+    healthcheck:
+      test: ["CMD", "curl", "-fSs", "http://localhost:8008/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # LiveKit - Real-time audio/video communication
+  livekit:
+    image: livekit/livekit-server:latest
+    container_name: livekit
+    restart: unless-stopped
+    command: --config /etc/livekit.yaml
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml:ro
+    networks:
+      - matrix
+    ports:
+      # WebRTC UDP ports for media (range 7882-7892)
+      - "7882-7892:7882-7892/udp"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7880/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Caddy - Reverse proxy with automatic HTTPS
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"  # HTTP/3
+      - "8448:8448"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - matrix
+    depends_on:
+      - synapse
+      - livekit
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  synapse_data:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+
+networks:
+  matrix:
+    driver: bridge

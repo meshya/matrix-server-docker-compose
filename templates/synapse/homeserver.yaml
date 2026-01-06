@@ -1,0 +1,110 @@
+# =============================================================================
+# Synapse Homeserver Configuration
+# Reference Matrix homeserver implementation
+# =============================================================================
+
+server_name: "{{MATRIX_DOMAIN}}"
+
+# Listener configuration
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
+
+# Database configuration (SQLite for simple setup)
+database:
+  name: sqlite3
+  args:
+    database: /data/homeserver.db
+
+# Logging
+log_config: "/data/{{MATRIX_DOMAIN}}.log.config"
+
+# Media storage
+media_store_path: /data/media_store
+max_upload_size: 100M
+
+# Registration settings
+enable_registration: {{ALLOW_REGISTRATION}}
+enable_registration_without_verification: {{ALLOW_REGISTRATION}}
+
+# Federation settings
+federation_domain_whitelist: []
+allow_public_rooms_over_federation: {{ALLOW_FEDERATION}}
+
+# URL previews
+url_preview_enabled: true
+url_preview_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '100.64.0.0/10'
+  - '192.0.0.0/24'
+  - '169.254.0.0/16'
+  - '192.88.99.0/24'
+  - '198.18.0.0/15'
+  - '192.0.2.0/24'
+  - '198.51.100.0/24'
+  - '203.0.113.0/24'
+  - '224.0.0.0/4'
+  - '::1/128'
+  - 'fe80::/10'
+  - 'fc00::/7'
+  - '2001:db8::/32'
+  - 'ff00::/8'
+  - 'fec0::/10'
+
+# Trusted key servers
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# Suppress key server warning
+suppress_key_server_warning: true
+
+# Signing key (will be auto-generated on first run)
+signing_key_path: "/data/{{MATRIX_DOMAIN}}.signing.key"
+
+# Report anonymous statistics
+report_stats: false
+
+# Macaroon secret key (auto-generated)
+macaroon_secret_key: "{{MACAROON_SECRET}}"
+
+# Form secret (auto-generated)
+form_secret: "{{FORM_SECRET}}"
+
+# Registration shared secret (for admin registration)
+registration_shared_secret: "{{REGISTRATION_SECRET}}"
+
+# Enable presence
+presence:
+  enabled: true
+
+# Room settings
+encryption_enabled_by_default_for_room_type: all
+
+# Rate limiting
+rc_message:
+  per_second: 0.2
+  burst_count: 10
+
+rc_registration:
+  per_second: 0.17
+  burst_count: 3
+
+rc_login:
+  address:
+    per_second: 0.17
+    burst_count: 3
+  account:
+    per_second: 0.17
+    burst_count: 3
+  failed_attempts:
+    per_second: 0.17
+    burst_count: 3
