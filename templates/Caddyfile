@@ -44,6 +44,18 @@
 	@options method OPTIONS
 	respond @options 204
 	
+	# Well-known endpoints for Matrix client discovery
+	handle /.well-known/matrix/client {
+		header Content-Type application/json
+		header Access-Control-Allow-Origin *
+		respond `{"m.homeserver":{"base_url":"https://{{MATRIX_DOMAIN}}"}}`
+	}
+	
+	handle /.well-known/matrix/server {
+		header Content-Type application/json
+		respond `{"m.server":"{{MATRIX_DOMAIN}}:443"}`
+	}
+	
 	# Reverse proxy to Conduit
 	reverse_proxy conduit:6167 {
 		# Health checks
